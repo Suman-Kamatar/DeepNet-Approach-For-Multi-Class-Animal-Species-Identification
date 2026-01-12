@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WildGuard AI | Intelligence Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+
+<body>
+    <div class="background-glow"></div>
+
+    <header>
+        <div class="logo-area">
+            <span class="logo-text">WILD<span class="accent">GUARD</span> AI</span>
+        </div>
+        <div class="status-bar">
+            AI: <span id="model-status">{{ model_type }}</span> | <span id="system-status"
+                class="offline">STANDBY</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="control-panel glass">
+            <div class="mode-selector">
+                <button id="btn-live-mode" class="mode-btn active" onclick="switchMode('live')">Live Camera
+                    Feed</button>
+                <button id="btn-static-mode" class="mode-btn" onclick="switchMode('static')">Static File
+                    Analysis</button>
+            </div>
+
+            <div id="live-controls" class="sub-controls">
+                <button id="start-btn" class="action-btn live" onclick="controlCamera('start')">▶ START LIVE
+                    CAMERA</button>
+                <button id="stop-btn" class="action-btn stop" onclick="controlCamera('stop')" disabled>■ STOP
+                    CAMERA</button>
+            </div>
+
+            <div id="static-controls" class="sub-controls hidden">
+                <div class="file-input-wrapper">
+                    <button class="action-btn file">📂 CHOOSE FILE</button>
+                    <input type="file" id="static-upload" accept="image/*" onchange="handleFileSelect(this)">
+                </div>
+                <button id="detect-btn" class="action-btn detect" onclick="uploadAndDetect()" disabled>🔍 SUBMIT &
+                    DETECT</button>
+                <span id="file-name-display">No file chosen</span>
+            </div>
+        </div>
+
+        <div class="main-display">
+            <div id="display-card" class="display-card glass">
+                <div class="video-frame">
+                    <img id="stream" src="" alt="System Standby" class="placeholder-img">
+                    <div id="loading-spinner" class="spinner hidden"></div>
+                </div>
+                <div id="static-info" class="static-info hidden"></div>
+            </div>
+        </div>
+
+        <aside class="sidebar glass">
+            <h3>Detection History & Logs</h3>
+            <div id="log-container" class="log-area">
+                <div class="empty-log">System standby. Start a mode to begin.</div>
+            </div>
+
+            <div class="alert-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Security Protocol</span>
+                    <span id="safety-score" class="stat-value safe">SECURE</span>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <div id="emergency-alert" class="emergency-overlay hidden">
+        <div class="alert-content">
+            <h1 class="danger-text">DANGER DETECTED</h1>
+            <p id="alert-animal-name">UNKNOWN SPECIMEN</p>
+            <div class="scanner-line"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

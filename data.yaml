@@ -1,0 +1,18 @@
+# Train/Val/Test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: C:/Users/suman/Desktop/yoloMajor/data  # dataset root dir
+train: train/images  # train images (relative to 'path') 
+val: val/images      # val images (relative to 'path') 
+
+# Classes
+names:
+  0: cat
+  1: dog
+  2: horse
+  3: cow
+  4: tiger
+  5: fox
+  6: lion
+  7: cheeta
+  8: hyena
+  9: wolf
+  10: person
